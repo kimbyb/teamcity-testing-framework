@@ -1,17 +1,15 @@
 package org.example.teamcitytesting.api.models;
 
-
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseModel {
-    private String username;
-    private String password;
+public class Steps {
+    private Integer count;
+    private List<Step> step;
 }
-
