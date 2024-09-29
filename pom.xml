@@ -17,7 +17,9 @@
         <testng-version>7.8.0</testng-version>
         <lombok.version>1.18.30</lombok.version>
         <allure.version>2.20.1</allure.version>
+        <jackson.version>2.17.2</jackson.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -39,7 +41,41 @@
             <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version> <!-- or the latest version -->
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- JAXB API -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
 
+        <!-- JAXB Runtime (implementation) -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <!-- Activation framework (required by JAXB) -->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
 
 </project>
