@@ -2,14 +2,12 @@ package org.example.teamcitytesting.api.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
+import lombok.*;
 import org.example.teamcitytesting.api.annotations.Random;
 
 @Builder
 @Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
