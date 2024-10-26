@@ -1,29 +1,41 @@
 package org.example.teamcitytesting.ui.common;
 
 import com.codeborne.selenide.Condition;
-import org.example.teamcitytesting.BaseTest;
 import org.example.teamcitytesting.api.ProjectPage;
 import org.example.teamcitytesting.api.models.Project;
 import org.example.teamcitytesting.enums.Endpoint;
 import org.example.teamcitytesting.ui.BaseUiTest;
+import org.example.teamcitytesting.ui.pages.ProjectsPage;
 import org.example.teamcitytesting.ui.pages.admin.CreateProjectPage;
 
 import static io.qameta.allure.Allure.step;
 
 public class ProjectCreation extends BaseUiTest {
-    
-    public void createProject(String repo_url) {
+
+    public void createProjectWithChecks(String repo_url, String projectName, String buildTypeName) {
         //ui interations
         CreateProjectPage.open("_Root")
                 .createForm(repo_url)
-                .setupProject(testData.getProject().getName(), testData.getBuildType().getName());
+                .setupProject(projectName, buildTypeName);
         // api checks
         step("Check that all entities (project, build type) were successfully created with correct data on API lvl");
-        var createdProject = superUserCheckRequest.<Project>getRequest(Endpoint.PROJECT).read("name:" + testData.getProject().getName());
-        softy.assertNotNull(createdProject);
+        var createdProject = superUserCheckRequest.<Project>getRequest(Endpoint.PROJECT).read("name:" + projectName);
         //ui check
         step("Check that project is visible on Projects page ");
         ProjectPage.open(createdProject.getId())
-                .title.shouldHave(Condition.exactText(testData.getProject().getName()));
+                .title.shouldHave(Condition.exactText(projectName));
+
+        //var projectExists = ProjectsPage.open().getProjects().stream().anyMatch(project -> project.getName().getText().equals(projectName));
     }
- }
+
+
+    public void createProjectNoChecks(String repo_url, String projectName, String buildTypeName) {
+        CreateProjectPage.open("_Root")
+                .createForm(repo_url)
+                .setupProject(projectName, buildTypeName);
+    }
+
+    public boolean checkProjectExists(String projectName) {
+        return ProjectsPage.open().getProjects().stream().anyMatch(project -> project.getName().getText().equals(projectName));
+    }
+}
