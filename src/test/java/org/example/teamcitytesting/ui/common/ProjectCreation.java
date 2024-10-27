@@ -17,9 +17,11 @@ public class ProjectCreation extends BaseUiTest {
         CreateProjectPage.open("_Root")
                 .createForm(repo_url)
                 .setupProject(projectName, buildTypeName);
+
         // api checks
         step("Check that all entities (project, build type) were successfully created with correct data on API lvl");
         var createdProject = superUserCheckRequest.<Project>getRequest(Endpoint.PROJECT).read("name:" + projectName);
+
         //ui check
         step("Check that project is visible on Projects page ");
         ProjectPage.open(createdProject.getId())

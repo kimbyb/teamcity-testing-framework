@@ -1,7 +1,10 @@
 package org.example.teamcitytesting.ui;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import org.example.teamcitytesting.api.ProjectPage;
 import org.example.teamcitytesting.ui.common.ProjectCreation;
+import org.example.teamcitytesting.ui.common.ProjectPageCommon;
 import org.example.teamcitytesting.ui.pages.ProjectsPage;
 import org.testng.annotations.Test;
 
@@ -47,4 +50,17 @@ public class CreateProjectTest extends BaseUiTest {
         //UI check
         step("Check that error appears Project name must not be empty");
     }
+
+     @Test(description = "user can find created project", groups = {"Positive"})
+    public void userSearchesProject() {
+        loginAs(testData.getUser());
+
+         ProjectCreation projectCreation = new ProjectCreation();
+         projectCreation.createProjectWithChecks(REPO_URL,testData.getProject().getName(), testData.getBuildType().getName());
+
+         SelenideElement projectName = $("*[aria-label='" + testData.getProject().getName() + "']");
+         ProjectPageCommon.search(testData.getProject().getName());
+
+         softy.assertTrue(projectName.isDisplayed());
+     }
 }
