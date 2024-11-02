@@ -1,10 +1,10 @@
 package org.example.teamcitytesting.ui;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.example.teamcitytesting.api.ProjectPage;
-import org.example.teamcitytesting.ui.common.ProjectCreation;
+import org.example.teamcitytesting.ui.common.BuildPageCommon;
+import org.example.teamcitytesting.ui.common.ProjectCreationCommon;
 import org.example.teamcitytesting.ui.common.ProjectPageCommon;
+import org.example.teamcitytesting.ui.pages.BuildPage;
 import org.example.teamcitytesting.ui.pages.ProjectsPage;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ public class CreateProjectTest extends BaseUiTest {
         // preparation
         loginAs(testData.getUser());
 
-        ProjectCreation projectCreation = new ProjectCreation();
+        ProjectCreationCommon projectCreation = new ProjectCreationCommon();
         projectCreation.createProjectWithChecks(REPO_URL,testData.getProject().getName(), testData.getBuildType().getName());
 
         //softy.assertTrue(projectCreation.checkProjectExists(testData.getProject().getName()));
@@ -38,7 +38,7 @@ public class CreateProjectTest extends BaseUiTest {
 
         SelenideElement errorMessage = $("#error_projectName");
 
-        ProjectCreation projectCreation = new ProjectCreation();
+        ProjectCreationCommon projectCreation = new ProjectCreationCommon();
         projectCreation.createProjectNoChecks(REPO_URL,"", testData.getBuildType().getName());
 
 
@@ -55,12 +55,26 @@ public class CreateProjectTest extends BaseUiTest {
     public void userSearchesProject() {
         loginAs(testData.getUser());
 
-         ProjectCreation projectCreation = new ProjectCreation();
+         ProjectCreationCommon projectCreation = new ProjectCreationCommon();
          projectCreation.createProjectWithChecks(REPO_URL,testData.getProject().getName(), testData.getBuildType().getName());
 
          SelenideElement projectName = $("*[aria-label='" + testData.getProject().getName() + "']");
          ProjectPageCommon.search(testData.getProject().getName());
 
          softy.assertTrue(projectName.isDisplayed());
+     }
+
+     @Test(description = "user can run build and see the output", groups = {"Positive"})
+    public void userCreatesBuild() {
+        loginAs(testData.getUser());
+
+         ProjectCreationCommon projectCreation = new ProjectCreationCommon();
+         projectCreation.createProjectNoChecks(REPO_URL,testData.getProject().getName(), testData.getBuildType().getName());
+
+         BuildPageCommon buildCreation = new BuildPageCommon();
+         buildCreation.createBuild("Command Line", "echo 'Hello World!'");
+
+         BuildPage.open(testData.getProject().getId());
+
      }
 }

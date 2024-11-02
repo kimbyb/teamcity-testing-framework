@@ -10,7 +10,7 @@ import org.example.teamcitytesting.ui.pages.admin.CreateProjectPage;
 
 import static io.qameta.allure.Allure.step;
 
-public class ProjectCreation extends BaseUiTest {
+public class ProjectCreationCommon extends BaseUiTest {
 
     public void createProjectWithChecks(String repo_url, String projectName, String buildTypeName) {
         //ui interations
