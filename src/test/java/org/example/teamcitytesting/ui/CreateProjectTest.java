@@ -47,6 +47,8 @@ public class CreateProjectTest extends BaseUiTest {
         var numberOfProjectsAfter = ProjectsPage.open().getProjects().size();
         softy.assertEquals(numberOfProjectsAfter, numberOfProjectsBefore);
 
+
+        softy.assertFalse(projectCreation.checkProjectExists(testData.getBuildType().getName()));
         //UI check
         step("Check that error appears Project name must not be empty");
     }
