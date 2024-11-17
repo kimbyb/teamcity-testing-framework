@@ -1,4 +1,4 @@
-package org.example.teamcitytesting.api;
+package org.example.teamcitytesting;
 
 import org.example.teamcitytesting.api.models.TestData;
 import org.example.teamcitytesting.api.requests.CheckedRequests;
@@ -7,9 +7,6 @@ import org.example.teamcitytesting.generators.TestDataStorage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.example.teamcitytesting.generators.TestDataGenerator.generate;
 
