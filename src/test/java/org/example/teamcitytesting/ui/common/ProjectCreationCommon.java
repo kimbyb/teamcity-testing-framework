@@ -32,9 +32,12 @@ public class ProjectCreationCommon extends BaseUiTest {
 
 
     public void createProjectNoChecks(String repo_url, String projectName, String buildTypeName) {
+        var createdProject = superUserCheckRequest.<Project>getRequest(Endpoint.PROJECT).read("name:" + projectName);
+
         CreateProjectPage.open("_Root")
                 .createForm(repo_url)
                 .setupProject(projectName, buildTypeName);
+
     }
 
     public boolean checkProjectExists(String projectName) {
