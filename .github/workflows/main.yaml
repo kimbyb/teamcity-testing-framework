@@ -11,6 +11,6 @@ jobs:
 
   automation-ui:
     needs: [ backend, frontend ]
-    uses: ./.github/workflows/automation.yml
+    uses: ./.github/workflows/automation.yaml
     with:
       package: ui
