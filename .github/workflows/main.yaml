@@ -1,0 +1,10 @@
+name: TeamCity deployment
+
+on: push
+
+jobs:
+  backend:
+    uses: ./.github/workflows/backend-stage.yaml
+
+  frontend:
+    uses: ./.github/workflows/frontend-stage.yaml
