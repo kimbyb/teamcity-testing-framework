@@ -6,7 +6,7 @@ runs:
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '18'
         distribution: 'zulu'
 
     # По умолчанию в ubuntu отсуствуе команда ifconfig
@@ -66,15 +66,9 @@ runs:
       # Настройка сервера при первом запуске (принятие лицензии, выбор базы данных и тд), реализованная в виде теста
       run: ./mvnw clean test -Dtest=SetupServerTest#setupTeamCityServerTest
 
-    - name: Wait 40 sec
-      shell: bash
-      run: sleep 40
-
     - name: Setup superUserToken environment variable
       shell: bash
-      run: |
-        echo "SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token:' | tail -n 1 | awk -F': ' '{print $2}' | awk '{print $1}')" >> $GITHUB_ENV
-
+      run: echo "SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
 
     - name: Set up superUserToken config property
       shell: bash
