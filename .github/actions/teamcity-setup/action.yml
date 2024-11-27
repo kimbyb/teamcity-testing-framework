@@ -67,6 +67,7 @@ runs:
       run: ./mvnw clean test -Dtest=SetupServerTest#setupTeamCityServerTest
 
     - name: Wait 40 sec
+      shell: bash
       run: sleep 40
 
     - name: Setup superUserToken environment variable
