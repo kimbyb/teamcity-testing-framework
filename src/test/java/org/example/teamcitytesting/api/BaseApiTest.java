@@ -10,25 +10,27 @@ import org.testng.annotations.BeforeSuite;
 
 import static org.example.teamcitytesting.generators.TestDataGenerator.generate;
 
-public class BaseApiTest  extends BaseTest {
+public class BaseApiTest extends BaseTest {
     private final ServerAuthRequest serverAuthRequest = new ServerAuthRequest(Specifications.superUserSpec());
     private AuthModules authModules;
     private boolean perProjectPermissions;
 
     @BeforeSuite(alwaysRun = true)
-    public void setupServerAuthSettings(){
+    public void setUpServerAuthSettings() {
+        // Получаем текущие настройки perProjectPermissions
         perProjectPermissions = serverAuthRequest.read().getPerProjectPermissions();
 
         authModules = generate(AuthModules.class);
-
+        // Обновляем значение perProjectPermissions на true
         serverAuthRequest.update(ServerAuthSettings.builder()
-                        .perProjectPermissions(true)
-                        .modules(authModules)
+                .perProjectPermissions(true)
+                .modules(authModules)
                 .build());
     }
 
     @AfterSuite(alwaysRun = true)
     public void cleanUpServerAuthSettings() {
+        // Возвращаем настройке perProjectPermissions исходное значение
         serverAuthRequest.update(ServerAuthSettings.builder()
                 .perProjectPermissions(perProjectPermissions)
                 .modules(authModules)
