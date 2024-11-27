@@ -32,6 +32,10 @@ jobs:
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
+      - name: Debug Docker Logs
+        shell: bash
+        run: docker logs teamcity-server
+
       - name: Run tests
         continue-on-error: true
         # Указываем группу, чтобы не запустить тесты, связанные с сетапом TeamCity
