@@ -66,6 +66,11 @@ runs:
       # Настройка сервера при первом запуске (принятие лицензии, выбор базы данных и тд), реализованная в виде теста
       run: ./mvnw clean test -Dtest=SetupServerTest#setupTeamCityServerTest
 
+    - name: Check TeamCity container status
+      shell: bash
+      run: docker ps -a | grep teamcity-server
+
+
     - name: Setup superUserToken environment variable
       shell: bash
       run: |
