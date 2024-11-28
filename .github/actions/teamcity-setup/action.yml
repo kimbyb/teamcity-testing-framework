@@ -69,8 +69,17 @@ runs:
     - name: Setup superUserToken environment variable
       shell: bash
       run: |
-        sleep 60
-        echo "SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
+        for i in {1..10}; do
+          SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')
+          if [ -n "$SUPER_USER_TOKEN" ]; then
+            echo "SUPER_USER_TOKEN=$SUPER_USER_TOKEN" >> $GITHUB_ENV
+            exit 0
+          fi
+          echo "Token not found, retrying in 30 seconds..."
+          sleep 30
+        done
+        echo "Failed to retrieve super user token" >&2
+        exit 1
 
     - name: Set up superUserToken config property
       shell: bash
