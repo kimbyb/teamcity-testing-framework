@@ -31,4 +31,3 @@ public class ServerAuthRequest {
                 .extract().as(ServerAuthSettings.class);
     }
 }
-
