@@ -32,6 +32,12 @@ jobs:
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
+
+      - name: Check TeamCity container status
+        shell: bash
+        run: docker ps -a | grep teamcity-server
+
+
       - name: Debug Docker Logs
         shell: bash
         run: docker logs teamcity-server
