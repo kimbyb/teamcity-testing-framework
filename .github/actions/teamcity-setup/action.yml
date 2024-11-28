@@ -66,6 +66,18 @@ runs:
       # Настройка сервера при первом запуске (принятие лицензии, выбор базы данных и тд), реализованная в виде теста
       run: ./mvnw clean test -Dtest=SetupServerTest#setupTeamCityServerTest
 
+    - name: Retrieve superUserToken from file
+      shell: bash
+      run: |
+        TOKEN_FILE=tmp/teamcity_server/datadir/system/superUserToken.properties
+        if [ -f "$TOKEN_FILE" ]; then
+        SUPER_USER_TOKEN=$(awk -F= '/superUserToken/ {print $2}' "$TOKEN_FILE")
+        echo "SUPER_USER_TOKEN=$SUPER_USER_TOKEN" >> $GITHUB_ENV
+        else
+        echo "Error: Token file not found." >&2
+        exit 1
+        fi
+        
     - name: Setup superUserToken environment variable
       shell: bash
       run: |
