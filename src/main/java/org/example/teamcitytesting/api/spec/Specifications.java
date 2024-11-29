@@ -9,6 +9,8 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.example.teamcitytesting.api.config.Config;
 import org.example.teamcitytesting.api.models.User;
+import io.qameta.allure.restassured.AllureRestAssured;
+
 
 import java.nio.file.Paths;
 
@@ -29,6 +31,7 @@ public class Specifications {
                         Paths.get("target/" + OUTPUT_DIRECTORY)
                 )
         ));
+        requestBuilder.addFilter(new AllureRestAssured());
         requestBuilder.setContentType(ContentType.JSON);
         requestBuilder.setAccept(ContentType.JSON);
         return requestBuilder;
