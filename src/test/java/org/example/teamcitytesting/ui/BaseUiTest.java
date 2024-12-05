@@ -2,6 +2,8 @@ package org.example.teamcitytesting.ui;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.teamcitytesting.BaseTest;
 import org.example.teamcitytesting.api.config.Config;
 import org.example.teamcitytesting.api.models.User;
@@ -28,6 +30,10 @@ public class BaseUiTest extends BaseTest {
                 "enableLog", true
                 ));
 
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true)
+                .includeSelenideSteps(true));
     }
 
     @AfterMethod(alwaysRun = true)
